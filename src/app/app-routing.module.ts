@@ -4,10 +4,13 @@ import { WorkOrdersDetailsComponent } from './components/work-order/work-orders-
 import { WorkOrdersListComponent } from './components/work-order/work-orders-list/work-orders-list.component';
 import { AuthGuard } from './guards/auth.guard';
 import { LoginComponent } from './components/auth/login/login.component';
+import { AppComponent } from './app.component';
+import { DashboardLayoutComponent } from './components/dashboard-layout/dashboard-layout.component';
 
 const routes: Routes = [
   {
     path: '',
+    component: DashboardLayoutComponent,
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
     children: [

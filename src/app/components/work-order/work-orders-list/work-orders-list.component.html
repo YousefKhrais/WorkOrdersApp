@@ -15,42 +15,45 @@
     </div>
 
     <div class="inner-content">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Operation Description</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                    <th>Progress</th>
-                    <th>Creation Date</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let workOrder of workOrders,let i=index">
-                    <td>{{i+1}}</td>
-                    <td>{{workOrder.operationDescription}}</td>
-                    <td> {{workOrder.startDate | date:'yyyy-MM-dd'}}</td>
-                    <td>{{workOrder.endDate | date:'yyyy-MM-dd'}}</td>
-                    <td>
-                        <div class="progress mt-1 me-3">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-                                aria-label="Animated striped example" aria-valuemin="0" aria-valuemax="100"
-                                [style]="{'width': workOrder.progress+'%'}">
-                                {{workOrder.progress}}% </div>
-                        </div>
-                    </td>
-                    <td>{{workOrder.creationDate | date:'yyyy-MM-dd'}}</td>
-                    <td class="text-left">
-                        <a class="btn btn-primary btn-sm me-1" nz-icon nzType="eye" nzTheme="outline"
-                            [routerLink]="['/orders/',workOrder.id]" style="color: white;"></a>
-                        <a class="btn btn-danger btn-sm" nz-icon nzType="delete" nzTheme="outline" *ngIf="!isReadOnly()"
-                            (click)="showConfirmDeleteDialog(workOrder.id)" style="color: white;"></a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Operation Description</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Progress</th>
+                        <th>Creation Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let workOrder of workOrders,let i=index">
+                        <td>{{i+1}}</td>
+                        <td>{{workOrder.operationDescription}}</td>
+                        <td> {{workOrder.startDate | date:'yyyy-MM-dd'}}</td>
+                        <td>{{workOrder.endDate | date:'yyyy-MM-dd'}}</td>
+                        <td>
+                            <div class="progress mt-1 me-3">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                                    aria-label="Animated striped example" aria-valuemin="0" aria-valuemax="100"
+                                    [style]="{'width': workOrder.progress+'%'}">
+                                    {{workOrder.progress}}% </div>
+                            </div>
+                        </td>
+                        <td>{{workOrder.creationDate | date:'yyyy-MM-dd'}}</td>
+                        <td class="text-left">
+                            <a class="btn btn-primary btn-sm me-1" nz-icon nzType="eye" nzTheme="outline"
+                                [routerLink]="['/orders/',workOrder.id]" style="color: white;"></a>
+                            <a class="btn btn-danger btn-sm" nz-icon nzType="delete" nzTheme="outline"
+                                *ngIf="!isReadOnly()" (click)="showConfirmDeleteDialog(workOrder.id)"
+                                style="color: white;"></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </nz-content>
 

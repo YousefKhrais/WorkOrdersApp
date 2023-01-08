@@ -9,38 +9,40 @@
         </div>
     </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Description</th>
-                <th>Location</th>
-                <th>Progress</th>
-                <th class="text-center">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let workOrderItem of workOrder.details,let i=index">
-                <td>{{i+1}}</td>
-                <td>{{workOrderItem.description}}</td>
-                <td>{{workOrderItem.location}}</td>
-                <td>
-                    <div class="progress mt-1">
-                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-                            aria-label="Animated striped example" aria-valuemin="0" aria-valuemax="100"
-                            [style]="{'width': workOrderItem.progress+'%'}">
-                            {{workOrderItem.progress}}% </div>
-                    </div>
-                </td>
-                <td class="text-center">
-                    <a class="btn btn-primary btn-sm me-1" nz-icon nzType="edit" nzTheme="outline"
-                        (click)="showUpdateModal(workOrderItem)" style="color: white;"></a>
-                    <a class="btn btn-danger btn-sm" nz-icon nzType="delete" nzTheme="outline" *ngIf="!isReadOnly()"
-                        (click)="showConfirmDeleteDialog(workOrderItem.id)" style="color: white;"></a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Description</th>
+                    <th>Location</th>
+                    <th>Progress</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let workOrderItem of workOrder.details,let i=index">
+                    <td>{{i+1}}</td>
+                    <td>{{workOrderItem.description}}</td>
+                    <td>{{workOrderItem.location}}</td>
+                    <td>
+                        <div class="progress mt-1">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                                aria-label="Animated striped example" aria-valuemin="0" aria-valuemax="100"
+                                [style]="{'width': workOrderItem.progress+'%'}">
+                                {{workOrderItem.progress}}% </div>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <a class="btn btn-primary btn-sm me-1" nz-icon nzType="edit" nzTheme="outline"
+                            (click)="showUpdateModal(workOrderItem)" style="color: white;"></a>
+                        <a class="btn btn-danger btn-sm" nz-icon nzType="delete" nzTheme="outline" *ngIf="!isReadOnly()"
+                            (click)="showConfirmDeleteDialog(workOrderItem.id)" style="color: white;"></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <nz-modal [(nzVisible)]="isCreateModalVisable" [nzStyle]="{ top: '20px' }" nzTitle="Add New Work Order Item"
