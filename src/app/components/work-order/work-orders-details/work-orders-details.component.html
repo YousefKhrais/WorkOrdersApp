@@ -1,0 +1,33 @@
+<nz-content>
+    <div class="pb-3 d-flex justify-content-between">
+        <div class="float-left">
+            <nz-breadcrumb>
+                <nz-breadcrumb-item>Home</nz-breadcrumb-item>
+                <nz-breadcrumb-item>
+                    <a [routerLink]="['/orders']">Work Orders</a>
+                </nz-breadcrumb-item>
+                <nz-breadcrumb-item>View</nz-breadcrumb-item>
+            </nz-breadcrumb>
+        </div>
+    </div>
+
+    <div class="inner-content">
+        <ul ngbNav #nav="ngbNav" [(activeId)]="active" [destroyOnHide]=false class="nav-tabs">
+            <li [ngbNavItem]="1" class="nav-item ml-4">
+                <a ngbNavLink>Header</a>
+                <ng-template ngbNavContent>
+                    <app-work-order-header-form [workOrder]="workOrder"></app-work-order-header-form>
+                </ng-template>
+            </li>
+            <li [ngbNavItem]="2" class="nav-item">
+                <a ngbNavLink>Details</a>
+                <ng-template ngbNavContent>
+                    <app-work-order-details-table [workOrder]="workOrder"></app-work-order-details-table>
+                </ng-template>
+            </li>
+        </ul>
+        <div class="panel-body tabs-menu-body hremp-tabs1 p-0">
+            <div class="tab-content mt-3" [ngbNavOutlet]="nav"></div>
+        </div>
+    </div>
+</nz-content>

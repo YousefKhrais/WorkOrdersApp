@@ -1,0 +1,67 @@
+<form>
+    <div class="col">
+        <div class="row">
+            <div class="col-12">
+                <nav class="navbar navbar-expand-lg navbar-dark mb-1" style="background: #309FDB">
+                    <span class="navbar-brand ps-3">Work Order Header</span>
+                    <span *ngIf="isReadOnly()">(Read Only)</span>
+                </nav>
+                <form [formGroup]="workOrderHeaderForm" (ngSubmit)="onSubmit()">
+                    <div class="form-group">
+                        <div class="row mb-3">
+                            <div class="col-md-3 col-sm-12">
+                                <label class="form-label mb-0 mt-2">Work Order Id</label>
+                                <input class="form-control" type="number" disabled value="{{workOrder.id}}">
+                            </div>
+                            <div class="col-md-3 col-sm-12">
+                                <label class="form-label mb-0 mt-2">Creation Date</label>
+                                <input class="form-control" type="date" disabled
+                                    value="{{workOrder.creationDate | date:'yyyy-MM-dd'}}" name="creationDate">
+                            </div>
+
+                            <div class="col-md-3 col-sm-12">
+                                <label class="form-label mb-0 mt-2">Start Date</label>
+                                <input class="form-control" type="date" [disabled]="isReadOnly()"
+                                    formControlName="startDate">
+                            </div>
+
+                            <div class="col-md-3 col-sm-12">
+                                <label class="form-label mb-0 mt-2">End Date</label>
+                                <input class="form-control" type="date" [disabled]="isReadOnly()"
+                                    formControlName="endDate">
+                            </div>
+                        </div>
+
+                        <div class="row mb-1 py-2 px-3">
+                            <label class="form-label">Progress</label>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                                    aria-label="Animated striped example" aria-valuemin="0" aria-valuemax="100"
+                                    [style]="{'width': workOrder.progress+'%'}">
+                                    {{workOrder.progress}}% </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-12 col-sm-12">
+                                <label class="form-label mb-0 mt-2">Operation Description</label>
+                                <textarea class="form-control" placeholder="Operation Description"
+                                    [disabled]="isReadOnly()" value="{{workOrder.operationDescription}}"
+                                    formControlName="operationDescription" name="operationDescription"
+                                    rows="5"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="row" *ngIf="!isReadOnly()">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="d-flex justify-content-end">
+                                    <button class="btn btn-primary" type="submit">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,80 @@
+<nz-content>
+    <div class="pb-3 d-flex justify-content-between">
+        <div class="float-left">
+            <nz-breadcrumb>
+                <nz-breadcrumb-item>Home</nz-breadcrumb-item>
+                <nz-breadcrumb-item>Work Orders</nz-breadcrumb-item>
+            </nz-breadcrumb>
+        </div>
+        <div class="float-right">
+            <a class="btn btn-info btn me-2" [nzSpin]="isLoading" (click)="loadData()" nz-icon nzType="reload"
+                nzTheme="outline" style="color: white;"></a>
+            <a class="btn btn-success btn" *ngIf="!isReadOnly()" nz-icon nzType="plus" nzTheme="outline"
+                (click)="showModal()" style="color: white;"></a>
+        </div>
+    </div>
+
+    <div class="inner-content">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Operation Description</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Progress</th>
+                    <th>Creation Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let workOrder of workOrders,let i=index">
+                    <td>{{i+1}}</td>
+                    <td>{{workOrder.operationDescription}}</td>
+                    <td> {{workOrder.startDate | date:'yyyy-MM-dd'}}</td>
+                    <td>{{workOrder.endDate | date:'yyyy-MM-dd'}}</td>
+                    <td>
+                        <div class="progress mt-1 me-3">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                                aria-label="Animated striped example" aria-valuemin="0" aria-valuemax="100"
+                                [style]="{'width': workOrder.progress+'%'}">
+                                {{workOrder.progress}}% </div>
+                        </div>
+                    </td>
+                    <td>{{workOrder.creationDate | date:'yyyy-MM-dd'}}</td>
+                    <td class="text-left">
+                        <a class="btn btn-primary btn-sm me-1" nz-icon nzType="eye" nzTheme="outline"
+                            [routerLink]="['/orders/',workOrder.id]" style="color: white;"></a>
+                        <a class="btn btn-danger btn-sm" nz-icon nzType="delete" nzTheme="outline" *ngIf="!isReadOnly()"
+                            (click)="showConfirmDeleteDialog(workOrder.id)" style="color: white;"></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</nz-content>
+
+
+<nz-modal [(nzVisible)]="isVisible" [nzStyle]="{ top: '20px' }" nzTitle="Add New Work Order"
+    (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" [nzOkLoading]="isOkLoading"
+    [nzOkDisabled]="!addWorkOrderForm.valid">
+    <div *nzModalContent>
+        <form [formGroup]="addWorkOrderForm">
+            <div class="form-group">
+                <label for="operationDescription">Operation description</label>
+                <input class="form-control mt-1" type="text" name="operationDescription"
+                    formControlName="operationDescription" placeholder="Enter Operation description">
+            </div>
+            <div class="form-group mt-2">
+                <label for="startDate">Start date</label>
+                <input class="form-control mt-1" type="date" name="startDate" formControlName="startDate"
+                    placeholder="Select Start Date">
+            </div>
+            <div class="form-group mt-2">
+                <label for="endDate">End date</label>
+                <input class="form-control mt-1" type="date" name="endDate" formControlName="endDate"
+                    placeholder="Select End Date">
+            </div>
+        </form>
+    </div>
+</nz-modal>

@@ -1,0 +1,29 @@
+<div *ngIf="isLogged()">
+    <a nz-dropdown [nzDropdownMenu]="menu" class="rounded">
+        <nz-avatar class="float-left" nzIcon="user"
+            nzSrc="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp">
+        </nz-avatar>
+    </a>
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu nzSelectable class="rounded">
+            <li nz-menu-item>
+                <div class="menu-content d-flex align-items-center px-3">
+                    <div class="me-3">
+                        <nz-avatar class="float-left" nzIcon="user"
+                            nzSrc="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp">
+                        </nz-avatar>
+                    </div>
+                    <div class="d-flex flex-column">
+                        <div class="fw-bold d-flex align-items-center">{{getCurrentUser().firstName+' '+getCurrentUser().lastName}}
+                            <span class="badge bg-success fw-bold ms-2">{{getCurrentUser().role}}</span>
+                        </div>
+                        <a href="#" class="fw-semibold text-muted text-hover-primary">{{getCurrentUser().email}}</a>
+                    </div>
+                </div>
+            </li>
+            <hr />
+            <li nz-menu-item>Account Settings</li>
+            <li nz-menu-item nzDanger (click)="logout()">Sign out</li>
+        </ul>
+    </nz-dropdown-menu>
+</div>

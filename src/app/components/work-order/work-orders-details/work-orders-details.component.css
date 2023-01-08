@@ -1,0 +1,13 @@
+nz-content {
+    padding: 0 8px;
+}
+
+.inner-content {
+    background: #fff;
+    padding: 16px;
+    height: 100%;
+}
+
+.inner-content th{
+    font-weight: bold;
+}

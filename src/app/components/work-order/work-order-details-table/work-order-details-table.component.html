@@ -1,0 +1,80 @@
+<div>
+    <div class="pb-3 d-flex justify-content-between">
+        <div class="float-left">
+
+        </div>
+        <div class="float-right">
+            <a class="btn btn-success btn" *ngIf="!isReadOnly()" (click)="showCreateModal()" nz-icon nzType="plus"
+                nzTheme="outline" style="color: white;"></a>
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Description</th>
+                <th>Location</th>
+                <th>Progress</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let workOrderItem of workOrder.details,let i=index">
+                <td>{{i+1}}</td>
+                <td>{{workOrderItem.description}}</td>
+                <td>{{workOrderItem.location}}</td>
+                <td>
+                    <div class="progress mt-1">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                            aria-label="Animated striped example" aria-valuemin="0" aria-valuemax="100"
+                            [style]="{'width': workOrderItem.progress+'%'}">
+                            {{workOrderItem.progress}}% </div>
+                    </div>
+                </td>
+                <td class="text-center">
+                    <a class="btn btn-primary btn-sm me-1" nz-icon nzType="edit" nzTheme="outline"
+                        (click)="showUpdateModal(workOrderItem)" style="color: white;"></a>
+                    <a class="btn btn-danger btn-sm" nz-icon nzType="delete" nzTheme="outline" *ngIf="!isReadOnly()"
+                        (click)="showConfirmDeleteDialog(workOrderItem.id)" style="color: white;"></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<nz-modal [(nzVisible)]="isCreateModalVisable" [nzStyle]="{ top: '20px' }" nzTitle="Add New Work Order Item"
+    (nzOnCancel)="onCancelCreateModal()" (nzOnOk)="onCreateItem()" [nzOkLoading]="isOkLoading"
+    [nzOkDisabled]="!addWorkOrderItemForm.valid">
+    <div *nzModalContent>
+        <form [formGroup]="addWorkOrderItemForm">
+            <div class="form-group">
+                <label for="operationDescription">Description</label>
+                <input class="form-control mt-1" type="text" name="description" formControlName="description"
+                    placeholder="Enter description">
+            </div>
+            <div class="form-group mt-2">
+                <label for="startDate">Location</label>
+                <select class="form-control" name="location" formControlName="location">
+                    <option *ngFor="let location of locations" value="{{location.name}}">
+                        {{location.name}}
+                    </option>
+                </select>
+            </div>
+        </form>
+    </div>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="isUpdateModalVisable" [nzStyle]="{ top: '20px' }" nzTitle="Update Work Order Item"
+    (nzOnCancel)="onCancelUpdateModal()" (nzOnOk)="onUpdateItem()" [nzOkLoading]="isOkLoading"
+    [nzOkDisabled]="!updateWorkOrderItemForm.valid">
+    <div *nzModalContent>
+        <form [formGroup]="updateWorkOrderItemForm">
+            <div class="form-group mt-2">
+                <label for="startDate">Progress</label>
+                <input class="form-control mt-1" type="number" name="progress" formControlName="progress" min="0"
+                    max="100" placeholder="Enter progress">
+            </div>
+        </form>
+    </div>
+</nz-modal>

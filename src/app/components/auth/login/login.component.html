@@ -1,0 +1,57 @@
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-6 mb-5 mb-lg-0">
+      <div class="card">
+        <div class="card-body py-5 px-md-5">
+          <div class="text-center">
+            <h2 class="fw-bold mb-5">Login</h2>
+          </div>
+
+          <div>
+            <div>Use engineer@test.com:password to login as a Site engineers</div>
+            <div>Use foremen@test.com:password to login as a Foremen</div>
+            <br>
+          </div>
+
+          <form [formGroup]="loginForm" novalidate (ngSubmit)="loginUser()">
+            <div class="form-outline mb-4">
+              <label class="form-label" for="email">Email</label>
+              <input type="email" formControlName="email" id="email" class="form-control" />
+
+              <small *ngIf=" validateControl('email') && hasError('email', 'required')" class="text-danger">Email is
+                required</small>
+
+              <small *ngIf="validateControl('email') && hasError('email', 'email')" class="text-danger">
+                Email is not valid
+              </small>
+            </div>
+
+            <div class="form-outline mb-1">
+              <label class="form-label" for="password">Password</label>
+              <input type="password" formControlName="password" id="password" class="form-control" />
+
+              <small *ngIf="validateControl('password') && hasError('password', 'required')" class="text-danger">
+                Password is required
+              </small>
+            </div>
+
+            <div class="text-center p-3">
+              <div *ngIf="showError" class="alert alert-danger" role="alert">{{ errorMessage }} </div>
+            </div>
+
+            <div class="text-center px-3 mb-2">
+              <button type="submit" class="btn btn-dark mb-3 w-50 rounded-pill" [disabled]="!loginForm.valid">
+                login
+              </button>
+            </div>
+
+            <div class="d-flex justify-content-between">
+              <div>Don't have an account? <a class="fw-bold me-1">Register</a></div>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
