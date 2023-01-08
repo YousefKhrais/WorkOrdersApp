@@ -30,9 +30,9 @@ export class WorkOrdersListComponent implements OnInit {
 
   ngOnInit(): void {
     this.addWorkOrderForm = new FormGroup({
-      operationDescription: new FormControl('', [Validators.required,]),
-      startDate: new FormControl([Validators.required,]),
-      endDate: new FormControl([Validators.required,]),
+      operationDescription: new FormControl('', [Validators.required]),
+      startDate: new FormControl('',[Validators.required, Validators.pattern(/^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/)]),
+      endDate: new FormControl('',[Validators.required, Validators.pattern(/^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/)]),
     });
 
     this.loadData();
@@ -72,7 +72,11 @@ export class WorkOrdersListComponent implements OnInit {
   handleOk(): void {
     this.isOkLoading = true;
 
-    console.log(this.addWorkOrderForm.value);
+    if (this.addWorkOrderForm.value.startDate > this.addWorkOrderForm.value.endDate) {
+      this.notificationService.error('Error', 'Start Date must be before End Date');
+      this.isOkLoading = false;
+      return;
+    }
 
     this.workOrdersService.addWorkOrder(this.addWorkOrderForm.value).subscribe({
       next: (data) => {

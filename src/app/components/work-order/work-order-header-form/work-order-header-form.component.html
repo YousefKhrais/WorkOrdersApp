@@ -21,14 +21,12 @@
 
                             <div class="col-md-3 col-sm-12">
                                 <label class="form-label mb-0 mt-2">Start Date</label>
-                                <input class="form-control" type="date" [disabled]="isReadOnly()"
-                                    formControlName="startDate">
+                                <input class="form-control" type="date" formControlName="startDate">
                             </div>
 
                             <div class="col-md-3 col-sm-12">
                                 <label class="form-label mb-0 mt-2">End Date</label>
-                                <input class="form-control" type="date" [disabled]="isReadOnly()"
-                                    formControlName="endDate">
+                                <input class="form-control" type="date" formControlName="endDate">
                             </div>
                         </div>
 
@@ -46,9 +44,8 @@
                             <div class="col-md-12 col-sm-12">
                                 <label class="form-label mb-0 mt-2">Operation Description</label>
                                 <textarea class="form-control" placeholder="Operation Description"
-                                    [disabled]="isReadOnly()" value="{{workOrder.operationDescription}}"
-                                    formControlName="operationDescription" name="operationDescription"
-                                    rows="5"></textarea>
+                                    value="{{workOrder.operationDescription}}" formControlName="operationDescription"
+                                    name="operationDescription" rows="5"></textarea>
                             </div>
                         </div>
 

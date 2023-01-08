@@ -41,7 +41,7 @@ export class WorkOrderDetailsTableComponent implements OnInit {
   ngOnInit(): void {
     this.addWorkOrderItemForm = new FormGroup({
       description: new FormControl('', [Validators.required,]),
-      location: new FormControl(1, [Validators.required,]),
+      location: new FormControl([Validators.required]),
     });
 
     this.updateWorkOrderItemForm = new FormGroup({
@@ -56,6 +56,7 @@ export class WorkOrderDetailsTableComponent implements OnInit {
   }
 
   showUpdateModal(workOrderItem: WorkOrderDetailsIteam) {
+    console.log("onupdate: " + workOrderItem);
     this.selectedWorkOrderItem = workOrderItem;
     this.isUpdateModalVisable = true;
   }
@@ -90,6 +91,9 @@ export class WorkOrderDetailsTableComponent implements OnInit {
         this.isCreateModalVisable = false;
         this.isOkLoading = false;
 
+        this.notificationService.success('Success', 'Work Order Item created successfully');
+
+        this.addWorkOrderItemForm.reset();
         if (data) {
           this.workOrder = data;
         }
@@ -97,6 +101,7 @@ export class WorkOrderDetailsTableComponent implements OnInit {
       error: (error) => {
         this.isCreateModalVisable = false;
         this.isOkLoading = false;
+        this.notificationService.error('Error while creating Work Order Item', error.message);
       },
     });
 
@@ -105,16 +110,25 @@ export class WorkOrderDetailsTableComponent implements OnInit {
   onUpdateItem(): void {
     this.isOkLoading = true;
 
+    console.log("beforeonupdate: " + this.workOrder, this.selectedWorkOrderItem,
+      this.updateWorkOrderItemForm.controls['progress'].value);
+
     this.workOrdersService.updateWorkOrderItem(this.workOrder, this.selectedWorkOrderItem,
       this.updateWorkOrderItemForm.controls['progress'].value).subscribe({
         next: (data) => {
           this.isUpdateModalVisable = false;
           this.isOkLoading = false;
-          console.log(data);
+
+          console.log("onupdate: " + data);
+
+          this.workOrder = data;
+          this.notificationService.success('Success', 'Work Order Item progress updated successfully');
         },
         error: (error) => {
           this.isUpdateModalVisable = false;
           this.isOkLoading = false;
+
+          this.notificationService.error('Error while updating Work Order Item progress', error.message);
         }
       });
   }

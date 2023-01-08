@@ -67,6 +67,9 @@ export class WorkOrdersService {
   // The function returns the work order with the new item.
   addWorkOrderItem(id: number, workOrderItem: WorkOrderDetailsIteam): Observable<WorkOrder | undefined> {
     return new Observable<WorkOrder | undefined>(observer => {
+      workOrderItem.id = this.workOrders.length + 1;
+      workOrderItem.progress = 0;
+      
       let workOrder = this.workOrders.find(x => x.id == id);
       workOrder?.details.push(workOrderItem);
       observer.next(workOrder);

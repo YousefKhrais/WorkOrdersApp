@@ -35,6 +35,9 @@
                         <td> {{workOrder.startDate | date:'yyyy-MM-dd'}}</td>
                         <td>{{workOrder.endDate | date:'yyyy-MM-dd'}}</td>
                         <td>
+                            <div *ngIf="workOrder.progress==0">
+                                {{workOrder.progress}}%
+                            </div>
                             <div class="progress mt-1 me-3">
                                 <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
                                     aria-label="Animated striped example" aria-valuemin="0" aria-valuemax="100"
@@ -70,13 +73,11 @@
             </div>
             <div class="form-group mt-2">
                 <label for="startDate">Start date</label>
-                <input class="form-control mt-1" type="date" name="startDate" formControlName="startDate"
-                    placeholder="Select Start Date">
+                <input class="form-control mt-1" type="date" name="startDate" formControlName="startDate" required>
             </div>
             <div class="form-group mt-2">
                 <label for="endDate">End date</label>
-                <input class="form-control mt-1" type="date" name="endDate" formControlName="endDate"
-                    placeholder="Select End Date">
+                <input class="form-control mt-1" type="date" name="endDate" formControlName="endDate" required>
             </div>
         </form>
     </div>

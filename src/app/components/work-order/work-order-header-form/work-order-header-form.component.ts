@@ -21,14 +21,23 @@ export class WorkOrderHeaderFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.workOrderHeaderForm = new FormGroup({
-      startDate: new FormControl(this.datePipe.transform(this.workOrder.startDate, "yyyy-MM-dd"), [Validators.required]),
-      endDate: new FormControl(this.datePipe.transform(this.workOrder.endDate, "yyyy-MM-dd"), [Validators.required]),
-      operationDescription: new FormControl(this.workOrder.operationDescription, [Validators.required, Validators.minLength(5)]),
+      startDate: new FormControl({ value: this.datePipe.transform(this.workOrder.startDate, "yyyy-MM-dd"), disabled: this.isReadOnly() }, [Validators.required, Validators.pattern(/^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/)]),
+      endDate: new FormControl({ value: this.datePipe.transform(this.workOrder.endDate, "yyyy-MM-dd"), disabled: this.isReadOnly() }, [Validators.required, Validators.pattern(/^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/)]),
+      operationDescription: new FormControl({ value: this.workOrder.operationDescription, disabled: this.isReadOnly() }, [Validators.required, Validators.minLength(5)]),
     });
   }
 
   onSubmit() {
-    this.workOrdersService.updateWorkOrder(this.workOrderHeaderForm.value).subscribe({
+    if (this.workOrderHeaderForm.value.startDate > this.workOrderHeaderForm.value.endDate) {
+      this.notificationService.error('Error while updating Work Order', 'Start date must be before end date');
+      return;
+    }
+
+    this.workOrder.startDate = new Date(this.workOrderHeaderForm.value.startDate);
+    this.workOrder.endDate = new Date(this.workOrderHeaderForm.value.endDate);
+    this.workOrder.operationDescription = this.workOrderHeaderForm.value.operationDescription;
+
+    this.workOrdersService.updateWorkOrder(this.workOrder).subscribe({
       next: (data) => {
         this.workOrder = data;
         this.notificationService.success('Work Order updated', 'Work Order updated successfully');
